@@ -352,8 +352,7 @@
   var current = null, index = 0, activePin = null;
 
   photo.addEventListener('load', function () { frame.classList.remove('is-error'); });
-  photo.addEventListener('error', function () { frame.classList.add('is-error'); });
-
+  photo.addEventListener('error', function () { frame.classList.add('is-error'); frame.querySelector('.sc-fail').textContent = 'Could not load: ' + photo.src; });
   function showPhoto(i) {
     var list = current.photos;
     index = (i + list.length) % list.length;
