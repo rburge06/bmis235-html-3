@@ -38,445 +38,361 @@
      This box is empty on purpose. In Part 7 you paste an interactive
      graphic BETWEEN the opening <div> and the closing </div> below.
      ===================================================================== -->
-<div class="showcase">
-<!-- HTML: Interactive European travel map and destination photo gallery -->
-<div class="showcase">
-  <div class="travel-heading">
-    <span class="travel-eyebrow">MY EUROPEAN ADVENTURE</span>
-    <h2>Places That Stole My Heart</h2>
-    <p>One semester abroad, three unforgettable trips. Explore my favorite places in Europe.</p>
-  </div>
-
-  <div class="travel-map">
-    <svg class="europe-map" viewBox="0 0 600 390" role="img" aria-label="Illustrated map of Europe showing four travel destinations">
-      <defs>
-        <pattern id="mapDots" width="12" height="12" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1" fill="#98daed" opacity=".65"/>
-        </pattern>
-      </defs>
-
-      <rect width="600" height="390" rx="18" fill="#f3faff"/>
-
-      <!-- Simplified European landmass -->
-      <path d="M130 75 L160 48 L195 57 L210 33 L242 44 L257 70 L290 64 L315 85 L348 70 L374 89 L400 73 L427 92 L454 86 L480 111 L464 137 L490 157 L474 182 L500 204 L479 228 L460 254 L441 271 L420 266 L410 292 L385 287 L367 306 L344 290 L325 307 L302 292 L281 308 L257 287 L240 301 L220 275 L194 280 L178 255 L155 250 L143 224 L120 205 L133 179 L110 158 L124 134 L105 112 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="2"/>
-
-      <!-- Northern and eastern regions -->
-      <path d="M275 20 L320 13 L351 29 L390 21 L427 38 L460 29 L490 53 L520 49 L541 77 L515 99 L486 90 L465 110 L435 92 L405 105 L375 83 L348 94 L324 68 L292 72 Z"
-        fill="#e6f3f5" stroke="#98cbd9" stroke-width="1.5"/>
-
-      <!-- Scandinavia -->
-      <path d="M310 12 L327 0 L350 9 L367 37 L359 72 L343 91 L324 75 L320 48 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-      <path d="M382 5 L405 12 L419 38 L411 68 L393 80 L376 57 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-
-      <!-- British Isles -->
-      <path d="M113 104 L128 88 L143 95 L146 119 L136 140 L119 135 L110 119 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-      <path d="M92 115 L102 108 L109 122 L104 139 L94 142 L87 128 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-
-      <!-- Iberian Peninsula -->
-      <path d="M127 235 L155 225 L185 233 L203 251 L195 282 L168 298 L140 281 L122 258 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-
-      <!-- Italy -->
-      <path d="M300 222 L318 239 L325 259 L340 279 L334 299 L323 281 L309 268 L299 245 L286 232 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-      <path d="M337 302 L353 308 L361 319 L347 316 Z"
-        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
-
-      <!-- Decorative island -->
-      <path d="M248 280 L255 285 L252 297 L244 293 Z" fill="#dceff3" stroke="#98cbd9"/>
-
-      <text x="287" y="155" fill="#8bb5c2" font-size="13" font-style="italic" letter-spacing="4">EUROPE</text>
-      <text x="294" y="177" fill="#8bb5c2" font-size="8" letter-spacing="2">MY TRAVEL MAP</text>
-    </svg>
-
-    <!-- Interactive destination pins -->
-    <button class="map-pin pin-florence active" data-place="florence" aria-label="Explore Florence" aria-pressed="true">
-      <span class="pin-dot">✦</span>
-      <span class="pin-label">Florence</span>
-    </button>
-
-    <button class="map-pin pin-edinburgh" data-place="edinburgh" aria-label="Explore Edinburgh" aria-pressed="false">
-      <span class="pin-dot">✦</span>
-      <span class="pin-label">Edinburgh</span>
-    </button>
-
-    <button class="map-pin pin-barcelona" data-place="barcelona" aria-label="Explore Barcelona" aria-pressed="false">
-      <span class="pin-dot">✦</span>
-      <span class="pin-label">Barcelona</span>
-    </button>
-
-    <button class="map-pin pin-cork" data-place="cork" aria-label="Explore Cork" aria-pressed="false">
-      <span class="pin-dot">✦</span>
-      <span class="pin-label">Cork</span>
-    </button>
-  </div>
-
-  <div class="map-instruction">✦ &nbsp; CLICK A PIN TO EXPLORE MY TRAVELS</div>
-
-  <!-- Destination details and photo gallery -->
-  <div class="destination-panel" aria-live="polite">
-    <div class="destination-info">
-      <span class="destination-number" id="travel-number">01 / 04</span>
-      <h3 id="travel-title">Florence, Italy</h3>
-      <p id="travel-description">My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.</p>
-    </div>
-
-    <div class="photo-gallery" id="travel-photos">
-      <div class="travel-photo">
-        <img src="img/florence-1.jpg" alt="Florence travel memory one">
-        <span class="photo-fallback">Add florence-1.jpg</span>
+<div class="showcase"><!-- HTML: the map picture, the pins that get added on top of it, and the pop-up card that shows your photos -->
+<div class="sc-stage">
+  <img class="sc-map" alt="Map of Europe" draggable="false">
+  <div class="sc-hint">Pick a pin to see my photos</div>
+  <div class="sc-pins"></div>
+  <div class="sc-modal" aria-hidden="true">
+    <div class="sc-card" role="dialog" aria-modal="true" aria-label="Travel photos">
+      <button class="sc-close" type="button" aria-label="Close photos">&times;</button>
+      <div class="sc-title"></div>
+      <div class="sc-sub"></div>
+      <div class="sc-frame">
+        <img class="sc-photo" alt="">
+        <div class="sc-fail">This photo couldn&rsquo;t be loaded. Check its file name.</div>
+        <button class="sc-nav sc-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+        <button class="sc-nav sc-next" type="button" aria-label="Next photo">&rsaquo;</button>
       </div>
-      <div class="travel-photo">
-        <img src="img/florence-2.jpg" alt="Florence travel memory two">
-        <span class="photo-fallback">Add florence-2.jpg</span>
-      </div>
+      <div class="sc-cap"></div>
     </div>
   </div>
-
-  <div class="travel-footer">COLLECTING MOMENTS, NOT JUST MILESTONES ♡</div>
 </div>
 
 <style>
-/* CSS: Styles the interactive map, destination pins, and photo gallery */
-.showcase {
+/* CSS: brand look (Georgia, #98daed, #2b5d8c) for the map frame, the pins and the photo card. Every rule starts with .showcase so it can't touch the rest of your page. */
+.showcase .sc-stage {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 900 / 820;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 4px solid #98daed;
+  border-radius: 16px;
+  background: #98daed;
+  box-shadow: 0 6px 18px rgba(43, 93, 140, 0.28);
   font-family: Georgia, "Aptos Serif", serif;
   color: #2b5d8c;
-  background: #ffffff;
-  border: 1px solid #dceef4;
-  border-radius: 18px;
-  padding: 24px;
-  max-width: 850px;
-  margin: 20px auto;
   box-sizing: border-box;
-  overflow: hidden;
 }
+.showcase .sc-stage *,
+.showcase .sc-stage *::before,
+.showcase .sc-stage *::after { box-sizing: border-box; }
 
-.showcase .travel-heading {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.showcase .travel-eyebrow {
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: #5b9db7;
-}
-
-.showcase .travel-heading h2 {
-  font-size: clamp(23px, 4vw, 34px);
-  margin: 9px 0;
-  color: #2b5d8c;
-}
-
-.showcase .travel-heading p {
-  font-size: 13px;
-  line-height: 1.6;
-  color: #68879a;
-  margin: 0 auto;
-  max-width: 480px;
-}
-
-.showcase .travel-map {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.showcase .europe-map {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.showcase .map-pin {
+.showcase .sc-map {
   position: absolute;
-  z-index: 2;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  border: none;
-  background: transparent;
-  padding: 4px;
-  cursor: pointer;
-  font-family: Arial, sans-serif;
+  left: -34.44%;
+  top: -78.05%;
+  width: 200.67%;
+  height: 220.24%;
+  max-width: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.showcase .pin-dot {
-  width: 29px;
-  height: 29px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
-  background: #2b5d8c;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  box-shadow: 0 2px 7px #2b5d8c55;
-  transition: transform .2s, background .2s;
-}
-
-.showcase .pin-label {
-  background: white;
+.showcase .sc-hint {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #98daed;
   color: #2b5d8c;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: bold;
-  box-shadow: 0 2px 7px #2b5d8c22;
-  white-space: nowrap;
-}
-
-.showcase .map-pin:hover .pin-dot,
-.showcase .map-pin.active .pin-dot {
-  background: #65b8d3;
-  transform: rotate(-45deg) scale(1.2);
-}
-
-.showcase .map-pin.active .pin-label {
-  background: #2b5d8c;
-  color: white;
-}
-
-.showcase .pin-florence {
-  left: 56%;
-  top: 69%;
-}
-
-.showcase .pin-edinburgh {
-  left: 25%;
-  top: 31%;
-}
-
-.showcase .pin-barcelona {
-  left: 27%;
-  top: 76%;
-}
-
-.showcase .pin-cork {
-  left: 14%;
-  top: 47%;
-}
-
-.showcase .map-instruction {
-  text-align: center;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: #75a9bd;
-  margin: 4px 0 20px;
-}
-
-.showcase .destination-panel {
-  background: #f2f9fc;
-  border-radius: 13px;
-  padding: 20px;
-  border: 1px solid #d9edf4;
-}
-
-.showcase .destination-number {
-  font-family: Arial, sans-serif;
-  color: #65a9c2;
-  font-size: 10px;
-  letter-spacing: 2px;
-  font-weight: bold;
-}
-
-.showcase .destination-info h3 {
-  font-size: 25px;
-  margin: 7px 0;
-  color: #2b5d8c;
-}
-
-.showcase .destination-info p {
-  color: #607e91;
   font-size: 13px;
-  line-height: 1.6;
-  margin: 0 0 16px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(43, 93, 140, 0.25);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.showcase .sc-hint.is-hidden { opacity: 0; }
+
+.showcase .sc-pins { position: absolute; inset: 0; }
+
+.showcase .sc-pin {
+  position: absolute;
+  width: 44px;
+  height: 52px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translate(-50%, -100%);
+  transform-origin: 50% 100%;
+  transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  font-family: Georgia, "Aptos Serif", serif;
+}
+.showcase .sc-pin svg {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+  width: 28px;
+  height: 38px;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+}
+.showcase .sc-pin .sc-body { fill: #2b5d8c; stroke: #fff; stroke-width: 2; transition: fill 0.2s ease; }
+.showcase .sc-pin .sc-eye { fill: #98daed; transition: fill 0.2s ease; }
+.showcase .sc-pin:hover,
+.showcase .sc-pin:focus-visible { transform: translate(-50%, -100%) scale(1.18); }
+.showcase .sc-pin:focus-visible { outline: none; }
+.showcase .sc-pin:focus-visible .sc-body { stroke: #98daed; stroke-width: 3; }
+.showcase .sc-pin.is-active .sc-body { fill: #98daed; stroke: #2b5d8c; }
+.showcase .sc-pin.is-active .sc-eye { fill: #2b5d8c; }
+
+.showcase .sc-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.1;
+  color: #2b5d8c;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 5px #fff, 0 0 5px #fff;
+  pointer-events: none;
 }
 
-.showcase .photo-gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.showcase .travel-photo {
-  height: 155px;
-  border-radius: 9px;
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(135deg, #98daed, #dceff3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.showcase .travel-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.showcase .sc-modal {
   position: absolute;
   inset: 0;
-}
-
-.showcase .photo-fallback {
-  color: #2b5d8c;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
-  text-align: center;
+  background: rgba(43, 93, 140, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
 }
+.showcase .sc-modal.is-open { opacity: 1; visibility: visible; }
 
-.showcase .travel-footer {
-  text-align: center;
-  color: #75a9bd;
-  font-family: Arial, sans-serif;
-  font-size: 9px;
-  letter-spacing: 2px;
-  margin-top: 18px;
+.showcase .sc-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 12px 12px 10px;
+  border: 3px solid #98daed;
+  border-radius: 14px;
+  background: #fbf9f4;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(12px) scale(0.97);
+  transition: transform 0.25s ease;
 }
+.showcase .sc-modal.is-open .sc-card { transform: none; }
 
-@media (max-width: 500px) {
-  .showcase {
-    padding: 14px;
-    border-radius: 12px;
-  }
+.showcase .sc-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #98daed;
+  color: #2b5d8c;
+  font-family: Georgia, "Aptos Serif", serif;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+.showcase .sc-close:hover,
+.showcase .sc-close:focus-visible { background: #2b5d8c; color: #fff; outline: none; }
 
-  .showcase .travel-heading h2 {
-    font-size: 23px;
-  }
+.showcase .sc-title { padding-right: 42px; font-size: 20px; font-weight: bold; line-height: 1.2; color: #2b5d8c; }
+.showcase .sc-sub { margin: 2px 0 8px; padding-right: 42px; font-size: 13px; color: #2b5d8c; opacity: 0.85; }
 
-  .showcase .travel-heading p {
-    font-size: 12px;
-  }
+.showcase .sc-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e4f6fb;
+}
+.showcase .sc-photo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+}
+.showcase .sc-fail { display: none; padding: 24px 16px; font-size: 13px; text-align: center; }
+.showcase .sc-frame.is-error .sc-photo { display: none; }
+.showcase .sc-frame.is-error .sc-fail { display: block; }
 
-  .showcase .pin-dot {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-  }
+.showcase .sc-nav {
+  position: absolute;
+  top: 50%;
+  display: none;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  padding: 0 0 3px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(251, 249, 244, 0.9);
+  color: #2b5d8c;
+  font-family: Georgia, "Aptos Serif", serif;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+.showcase .sc-prev { left: 6px; }
+.showcase .sc-next { right: 6px; }
+.showcase .sc-card.has-many .sc-nav { display: block; }
+.showcase .sc-nav:hover,
+.showcase .sc-nav:focus-visible { background: #2b5d8c; color: #fff; outline: none; }
 
-  .showcase .pin-label {
-    font-size: 9px;
-    padding: 3px 6px;
-  }
+.showcase .sc-cap { margin-top: 7px; font-size: 13px; line-height: 1.3; text-align: center; color: #2b5d8c; }
 
-  .showcase .destination-panel {
-    padding: 14px;
-  }
-
-  .showcase .destination-info h3 {
-    font-size: 21px;
-  }
-
-  .showcase .travel-photo {
-    height: 115px;
-  }
+@media (max-width: 520px) {
+  .showcase .sc-photo { max-height: 50vw; }
+  .showcase .sc-title { font-size: 18px; }
+  .showcase .sc-hint { font-size: 12px; top: 8px; left: 8px; }
+  .showcase .sc-label { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase .sc-pin,
+  .showcase .sc-modal,
+  .showcase .sc-card { transition: none; }
 }
 </style>
 
 <script>
-/* JavaScript: Changes the selected destination and its travel photos when a map pin is clicked */
+/* JavaScript: lists your four places and photos, puts a pin on the map for each one, and opens the photo card when a pin is clicked, tapped or chosen with the keyboard. Esc, the X, or a click outside the card closes it. */
 (function () {
-  const showcase = document.currentScript.parentElement;
-  
-const destinations = {
-  florence: {
-    number: "01 / 04",
-    title: "Florence, Italy",
-    description: "My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.",
-    photos: ["img/florencemap.jpeg"]
-  },
-  edinburgh: {
-    number: "02 / 04",
-    title: "Edinburgh, Scotland",
-    description: "A trip filled with beautiful architecture, charming streets, and unforgettable Scottish scenery.",
-    photos: ["img/edinburghmap.jpeg"]
-  },
-  barcelona: {
-    number: "03 / 04",
-    title: "Barcelona, Spain",
-    description: "Colorful architecture, incredible views, and the energy of exploring a completely new city.",
-    photos: ["img/spainmap.jpeg"]
-  },
-  cork: {
-    number: "04 / 04",
-    title: "Cork, Ireland",
-    description: "A memorable Irish adventure filled with new experiences, beautiful landscapes, and great memories.",
-    photos: ["img/irelandmap.jpeg"]
-  }
-};
+  var me = document.currentScript;
+  var root = (me && me.closest && me.closest('.showcase')) || document.querySelector('.showcase');
+  if (!root) return;
 
+  // If your photos live in a folder, put its path here, e.g. 'images/' (leave '' if they sit next to your page).
+  var IMG_PATH = '';
 
-  const pins = showcase.querySelectorAll(".map-pin");
-  const number = showcase.querySelector("#travel-number");
-  const title = showcase.querySelector("#travel-title");
-  const description = showcase.querySelector("#travel-description");
-  const gallery = showcase.querySelector("#travel-photos");
+  // Your original map picture, exactly as you uploaded it (the code crops it to Europe's west side for you).
+  var MAP_FILE = 'europe-map.avif';
 
-  function selectDestination(place) {
-    const destination = destinations[place];
-    if (!destination) return;
+  // x and y are the pin's position on the map, as a percent from the left and from the top.
+  // To add more photos to a place, add another { file: '...', caption: '...' } line to its list.
+  var places = [
+    { name: 'Florence',  sub: 'Italy · my study abroad home base', x: 69.4, y: 75.0,
+      photos: [ { file: 'florencemap.jpeg', caption: 'Florence, Italy' } ] },
+    { name: 'Edinburgh', sub: 'Scotland · one of my favorite trips', x: 37.6, y: 16.7,
+      photos: [ { file: 'scotlandmap.jpeg', caption: 'Edinburgh, Scotland' } ] },
+    { name: 'Barcelona', sub: 'Spain · one of my favorite trips', x: 43.1, y: 83.9,
+      photos: [ { file: 'spainmap.jpeg', caption: 'Barcelona, Spain' } ] },
+    { name: 'Cork',      sub: 'Ireland · one of my favorite trips', x: 22.0, y: 30.1,
+      photos: [ { file: 'irelandmap.jpeg', caption: 'Cork, Ireland' } ] }
+  ];
 
-    number.textContent = destination.number;
-    title.textContent = destination.title;
-    description.textContent = destination.description;
+  var NS = 'http://www.w3.org/2000/svg';
+  var pinsLayer = root.querySelector('.sc-pins');
+  var hint = root.querySelector('.sc-hint');
+  var modal = root.querySelector('.sc-modal');
+  var card = root.querySelector('.sc-card');
+  var titleEl = root.querySelector('.sc-title');
+  var subEl = root.querySelector('.sc-sub');
+  var frame = root.querySelector('.sc-frame');
+  var photo = root.querySelector('.sc-photo');
+  var capEl = root.querySelector('.sc-cap');
+  var closeBtn = root.querySelector('.sc-close');
+  var prevBtn = root.querySelector('.sc-prev');
+  var nextBtn = root.querySelector('.sc-next');
+  var current = null, index = 0, activePin = null;
 
-    pins.forEach(function (pin) {
-      const selected = pin.dataset.place === place;
-      pin.classList.toggle("active", selected);
-      pin.setAttribute("aria-pressed", selected ? "true" : "false");
-    });
+  root.querySelector('.sc-map').src = IMG_PATH + MAP_FILE;
 
-    gallery.innerHTML = "";
+  photo.addEventListener('load', function () { frame.classList.remove('is-error'); });
+  photo.addEventListener('error', function () { frame.classList.add('is-error'); });
 
-    destination.photos.forEach(function (photo, index) {
-      const frame = document.createElement("div");
-      frame.className = "travel-photo";
-
-      const img = document.createElement("img");
-      img.src = photo;
-      img.alt = destination.title + " travel memory " + (index + 1);
-
-      const fallback = document.createElement("span");
-      fallback.className = "photo-fallback";
-      fallback.textContent = "Add " + photo;
-
-      img.addEventListener("load", function () {
-        fallback.hidden = true;
-      });
-
-      img.addEventListener("error", function () {
-        img.hidden = true;
-      });
-
-      frame.appendChild(img);
-      frame.appendChild(fallback);
-      gallery.appendChild(frame);
-    });
+  function showPhoto(i) {
+    var list = current.photos;
+    index = (i + list.length) % list.length;
+    var p = list[index];
+    frame.classList.remove('is-error');
+    photo.alt = p.caption || current.name;
+    photo.src = IMG_PATH + p.file;
+    capEl.textContent = (p.caption || '') + (list.length > 1 ? '  (' + (index + 1) + ' of ' + list.length + ')' : '');
   }
 
-  pins.forEach(function (pin) {
-    pin.addEventListener("click", function () {
-      selectDestination(pin.dataset.place);
-    });
+  function openPlace(place, pin) {
+    if (activePin) activePin.classList.remove('is-active');
+    activePin = pin;
+    pin.classList.add('is-active');
+    current = place;
+    titleEl.textContent = place.name;
+    subEl.textContent = place.sub;
+    card.classList.toggle('has-many', place.photos.length > 1);
+    showPhoto(0);
+    hint.classList.add('is-hidden');
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    if (!modal.classList.contains('is-open')) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (activePin) { activePin.classList.remove('is-active'); activePin.focus(); }
+    activePin = null;
+    current = null;
+  }
+
+  places.forEach(function (place) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'sc-pin';
+    btn.style.left = place.x + '%';
+    btn.style.top = place.y + '%';
+    btn.setAttribute('aria-label', 'See photos from ' + place.name);
+
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 28 38');
+    svg.setAttribute('aria-hidden', 'true');
+    var body = document.createElementNS(NS, 'path');
+    body.setAttribute('class', 'sc-body');
+    body.setAttribute('d', 'M14 37C14 37 2 24 2 14a12 12 0 0 1 24 0c0 10-12 23-12 23z');
+    var eye = document.createElementNS(NS, 'circle');
+    eye.setAttribute('class', 'sc-eye');
+    eye.setAttribute('cx', '14');
+    eye.setAttribute('cy', '14');
+    eye.setAttribute('r', '4.5');
+    svg.appendChild(body);
+    svg.appendChild(eye);
+    btn.appendChild(svg);
+
+    var label = document.createElement('span');
+    label.className = 'sc-label';
+    label.textContent = place.name;
+    btn.appendChild(label);
+
+    btn.addEventListener('click', function () { openPlace(place, btn); });
+    pinsLayer.appendChild(btn);
   });
 
-  selectDestination("florence");
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  prevBtn.addEventListener('click', function () { showPhoto(index - 1); });
+  nextBtn.addEventListener('click', function () { showPhoto(index + 1); });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+    else if (current && current.photos.length > 1 && e.key === 'ArrowLeft') showPhoto(index - 1);
+    else if (current && current.photos.length > 1 && e.key === 'ArrowRight') showPhoto(index + 1);
+  });
 })();
-</script>
-</div>
+</script></div>
 
 <!-- Footer: fill in your name -->
 <footer>Built by Riley Burge &middot; BMIS 235</footer>
