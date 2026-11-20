@@ -390,32 +390,34 @@
 /* JavaScript: Changes the selected destination and its travel photos when a map pin is clicked */
 (function () {
   const showcase = document.currentScript.parentElement;
-  const destinations = {
-    florence: {
-      number: "01 / 04",
-      title: "Florence, Italy",
-      description: "My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.",
-      photos: ["img/florence-1.jpg", "img/florence-2.jpg"]
-    },
-    edinburgh: {
-      number: "02 / 04",
-      title: "Edinburgh, Scotland",
-      description: "A trip filled with beautiful architecture, charming streets, and unforgettable Scottish scenery.",
-      photos: ["img/edinburgh-1.jpg", "img/edinburgh-2.jpg"]
-    },
-    barcelona: {
-      number: "03 / 04",
-      title: "Barcelona, Spain",
-      description: "Colorful architecture, incredible views, and the energy of exploring a completely new city.",
-      photos: ["img/barcelona-1.jpg", "img/barcelona-2.jpg"]
-    },
-    cork: {
-      number: "04 / 04",
-      title: "Cork, Ireland",
-      description: "A memorable Irish adventure filled with new experiences, beautiful landscapes, and great memories.",
-      photos: ["img/cork-1.jpg", "img/cork-2.jpg"]
-    }
-  };
+  
+const destinations = {
+  florence: {
+    number: "01 / 04",
+    title: "Florence, Italy",
+    description: "My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.",
+    photos: ["img/florencemap.jpeg"]
+  },
+  edinburgh: {
+    number: "02 / 04",
+    title: "Edinburgh, Scotland",
+    description: "A trip filled with beautiful architecture, charming streets, and unforgettable Scottish scenery.",
+    photos: ["img/edinburghmap.jpeg"]
+  },
+  barcelona: {
+    number: "03 / 04",
+    title: "Barcelona, Spain",
+    description: "Colorful architecture, incredible views, and the energy of exploring a completely new city.",
+    photos: ["img/spainmap.jpeg"]
+  },
+  cork: {
+    number: "04 / 04",
+    title: "Cork, Ireland",
+    description: "A memorable Irish adventure filled with new experiences, beautiful landscapes, and great memories.",
+    photos: ["img/irelandmap.jpeg"]
+  }
+};
+
 
   const pins = showcase.querySelectorAll(".map-pin");
   const number = showcase.querySelector("#travel-number");
