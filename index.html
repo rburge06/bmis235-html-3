@@ -39,7 +39,7 @@
      graphic BETWEEN the opening <div> and the closing </div> below.
      ===================================================================== -->
 <div class="showcase">
-<!-- HTML: the map picture, the pins that get added on top of it, and the pop-up card that shows your photos -->
+  <!-- HTML: the map of Europe (drawn as a vector SVG), the hint pill, and an empty layer where the four flip-able pins are added by the JavaScript below -->
 <div class="sc-stage">
   <svg class="sc-map" viewBox="0 0 900 820" preserveAspectRatio="none" role="img" aria-label="Map of Europe">
     <g class="sc-land">
@@ -69,25 +69,11 @@
       <text x="722" y="388">CZECHIA</text>
     </g>
   </svg>
-  <div class="sc-hint">Pick a pin to see my photos</div>
+  <div class="sc-hint">Click a pin to flip it</div>
   <div class="sc-pins"></div>
-  <div class="sc-modal" aria-hidden="true">
-    <div class="sc-card" role="dialog" aria-modal="true" aria-label="Travel photos">
-      <button class="sc-close" type="button" aria-label="Close photos">&times;</button>
-      <div class="sc-title"></div>
-      <div class="sc-sub"></div>
-      <div class="sc-frame">
-        <img class="sc-photo" alt="">
-        <div class="sc-fail">This photo couldn&rsquo;t be loaded. Check its file name.</div>
-        <button class="sc-nav sc-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
-        <button class="sc-nav sc-next" type="button" aria-label="Next photo">&rsaquo;</button>
-      </div>
-      <div class="sc-cap"></div>
-    </div>
-  </div>
 </div>
 
-<!-- CSS: brand look (Georgia, #98daed, #2b5d8c) for the map frame, the pins and the photo card. Every rule starts with .showcase so it can't touch the rest of your page. -->
+<!-- CSS: brand look (Georgia, #98daed, #2b5d8c) for the map frame, the pins and the flip animation that turns a pin into a memory card. Every rule starts with .showcase so it can't touch the rest of your page. -->
 <style>
 .showcase .sc-stage {
   position: relative;
@@ -149,8 +135,17 @@
 
 .showcase .sc-pins { position: absolute; inset: 0; }
 
+.showcase .sc-spot {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.showcase .sc-spot.is-open { z-index: 5; }
+
 .showcase .sc-pin {
   position: absolute;
+  left: 0;
+  top: 0;
   width: 44px;
   height: 52px;
   padding: 0;
@@ -158,9 +153,9 @@
   border: 0;
   background: transparent;
   cursor: pointer;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%) perspective(400px) rotateY(0deg);
   transform-origin: 50% 100%;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease 0.2s, opacity 0s, visibility 0s;
   -webkit-tap-highlight-color: transparent;
   font-family: Georgia, "Aptos Serif", serif;
 }
@@ -173,14 +168,17 @@
   overflow: visible;
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
 }
-.showcase .sc-pin .sc-body { fill: #2b5d8c; stroke: #fff; stroke-width: 2; transition: fill 0.2s ease; }
-.showcase .sc-pin .sc-eye { fill: #98daed; transition: fill 0.2s ease; }
-.showcase .sc-pin:hover,
-.showcase .sc-pin:focus-visible { transform: translate(-50%, -100%) scale(1.18); }
-.showcase .sc-pin:focus-visible { outline: none; }
-.showcase .sc-pin:focus-visible .sc-body { stroke: #98daed; stroke-width: 3; }
-.showcase .sc-pin.is-active .sc-body { fill: #98daed; stroke: #2b5d8c; }
-.showcase .sc-pin.is-active .sc-eye { fill: #2b5d8c; }
+.showcase .sc-pin .sc-body { fill: #2b5d8c; stroke: #98daed; stroke-width: 2; }
+.showcase .sc-pin .sc-eye { fill: #98daed; }
+.showcase .sc-pin:hover { transform: translate(-50%, -100%) perspective(400px) rotateY(0deg) scale(1.18); transition-delay: 0s; }
+.showcase .sc-pin:focus-visible { outline: none; transform: translate(-50%, -100%) perspective(400px) rotateY(0deg) scale(1.18); transition-delay: 0s; }
+.showcase .sc-pin:focus-visible .sc-body { stroke: #fff; stroke-width: 3; }
+.showcase .sc-spot.is-open .sc-pin {
+  transform: translate(-50%, -100%) perspective(400px) rotateY(90deg);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.2s ease, opacity 0s 0.2s, visibility 0s 0.2s;
+}
 
 .showcase .sc-label {
   position: absolute;
@@ -193,208 +191,149 @@
   font-weight: bold;
   line-height: 1.1;
   color: #2b5d8c;
-  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 5px #fff, 0 0 5px #fff;
+  text-shadow: 0 0 3px #98daed, 0 0 3px #98daed, 0 0 5px #98daed, 0 0 5px #98daed;
   pointer-events: none;
 }
 
-.showcase .sc-modal {
+.showcase .sc-card {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background: rgba(43, 93, 140, 0.55);
+  left: 0;
+  top: 0;
+  padding: 10px 14px 12px;
+  overflow-y: auto;
+  border: 3px solid #2b5d8c;
+  border-radius: 12px;
+  background: #98daed;
+  color: #2b5d8c;
+  box-shadow: 0 8px 22px rgba(43, 93, 140, 0.45);
+  cursor: pointer;
+  outline: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s;
+  transform: perspective(600px) rotateY(-90deg);
+  transition: transform 0.2s ease, opacity 0s 0.2s, visibility 0s 0.2s;
 }
-.showcase .sc-modal.is-open { opacity: 1; visibility: visible; }
-
-.showcase .sc-card {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  max-height: 100%;
-  overflow-y: auto;
-  padding: 12px 12px 10px;
-  border: 3px solid #98daed;
-  border-radius: 14px;
-  background: #fbf9f4;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transform: translateY(12px) scale(0.97);
-  transition: transform 0.25s ease;
+.showcase .sc-spot.is-open .sc-card {
+  opacity: 1;
+  visibility: visible;
+  transform: perspective(600px) rotateY(0deg);
+  transition: transform 0.25s ease 0.2s, opacity 0s 0.2s, visibility 0s 0.2s;
 }
-.showcase .sc-modal.is-open .sc-card { transform: none; }
 
 .showcase .sc-close {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 2;
-  width: 34px;
-  height: 34px;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #98daed;
-  color: #2b5d8c;
+  background: #2b5d8c;
+  color: #98daed;
   font-family: Georgia, "Aptos Serif", serif;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
 }
-.showcase .sc-close:hover,
-.showcase .sc-close:focus-visible { background: #2b5d8c; color: #fff; outline: none; }
+.showcase .sc-close:focus-visible { outline: 2px solid #fff; outline-offset: 1px; }
 
-.showcase .sc-title { padding-right: 42px; font-size: 20px; font-weight: bold; line-height: 1.2; color: #2b5d8c; }
-.showcase .sc-sub { margin: 2px 0 8px; padding-right: 42px; font-size: 13px; color: #2b5d8c; opacity: 0.85; }
-
-.showcase .sc-frame {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 110px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #e4f6fb;
-}
-.showcase .sc-photo {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: contain;
-}
-.showcase .sc-fail { display: none; padding: 24px 16px; font-size: 13px; text-align: center; }
-.showcase .sc-frame.is-error .sc-photo { display: none; }
-.showcase .sc-frame.is-error .sc-fail { display: block; }
-
-.showcase .sc-nav {
-  position: absolute;
-  top: 50%;
-  display: none;
-  width: 36px;
-  height: 36px;
-  margin-top: -18px;
-  padding: 0 0 3px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(251, 249, 244, 0.9);
-  color: #2b5d8c;
-  font-family: Georgia, "Aptos Serif", serif;
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-}
-.showcase .sc-prev { left: 6px; }
-.showcase .sc-next { right: 6px; }
-.showcase .sc-card.has-many .sc-nav { display: block; }
-.showcase .sc-nav:hover,
-.showcase .sc-nav:focus-visible { background: #2b5d8c; color: #fff; outline: none; }
-
-.showcase .sc-cap { margin-top: 7px; font-size: 13px; line-height: 1.3; text-align: center; color: #2b5d8c; }
+.showcase .sc-kicker { padding-right: 30px; font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.8; }
+.showcase .sc-city { margin: 2px 0 6px; padding-right: 30px; font-size: 20px; font-weight: bold; line-height: 1.15; }
+.showcase .sc-memory { font-size: 14px; line-height: 1.45; }
+.showcase .sc-tip { margin-top: 8px; font-size: 11px; opacity: 0.75; }
 
 @media (max-width: 520px) {
-  .showcase .sc-photo { max-height: 50vw; }
-  .showcase .sc-title { font-size: 18px; }
   .showcase .sc-hint { font-size: 12px; top: 8px; left: 8px; }
   .showcase .sc-label { font-size: 12px; }
+  .showcase .sc-city { font-size: 18px; }
+  .showcase .sc-memory { font-size: 13px; }
 }
 @media (max-width: 440px) {
   .showcase .sc-names { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .showcase .sc-pin,
-  .showcase .sc-modal,
-  .showcase .sc-card { transition: none; }
+  .showcase .sc-card,
+  .showcase .sc-spot.is-open .sc-pin,
+  .showcase .sc-spot.is-open .sc-card { transition: none; }
 }
 </style>
 
-<!-- JavaScript: lists your four places and photos, puts a pin on the map for each one, and opens the photo card when a pin is clicked, tapped or chosen with the keyboard. Esc, the X, or a click outside the card closes it. -->
+<!-- JavaScript: holds your four places and their favorite memories, puts a pin on the map for each one, and flips a pin into its memory card when clicked, tapped or chosen with the keyboard. Click the card, the X, the map or press Esc to flip it back. -->
 <script>
 (function () {
   var me = document.currentScript;
   var root = (me && me.closest && me.closest('.showcase')) || document.querySelector('.showcase');
   if (!root) return;
 
-  // The folder your photos are in. Yours is img, so this is 'img/'. Change it if your folder name is different.
-  var IMG_PATH = 'img/';
-
+  // EDIT HERE: write your favorite memory for each place between the quote marks after "memory:".
   // x and y are the pin's position on the map, as a percent from the left and from the top.
-  // To add more photos to a place, add another { file: '...', caption: '...' } line to its list.
   var places = [
-    { name: 'Florence',  sub: 'Italy · my study abroad home base', x: 69.4, y: 75.0,
-      photos: [ { file: 'florencemap.jpeg', caption: 'Florence, Italy' } ] },
-    { name: 'Edinburgh', sub: 'Scotland · one of my favorite trips', x: 37.6, y: 16.7,
-      photos: [ { file: 'edinburghmap.jpeg', caption: 'Edinburgh, Scotland' } ] },
-    { name: 'Barcelona', sub: 'Spain · one of my favorite trips', x: 43.1, y: 83.9,
-      photos: [ { file: 'spainmap.jpeg', caption: 'Barcelona, Spain' } ] },
-    { name: 'Cork',      sub: 'Ireland · one of my favorite trips', x: 22.0, y: 30.1,
-      photos: [ { file: 'irelandmap.jpeg', caption: 'Cork, Ireland' } ] }
+    { name: 'Florence',  title: 'Florence, Italy',     x: 69.4, y: 75.0,
+      memory: 'Going on walks through the city after class and discovering my favorite hidden places.' },
+    { name: 'Edinburgh', title: 'Edinburgh, Scotland', x: 37.6, y: 16.7,
+      memory: 'Getting invited to Easter Sunday Service from these girls evangelising on the street.' },
+    { name: 'Barcelona', title: 'Barcelona, Spain',    x: 43.1, y: 83.9,
+      memory: 'Getting to travel and experience a new place with my favorite people.' },
+    { name: 'Cork',      title: 'Cork, Ireland',       x: 22.0, y: 30.1,
+      memory: 'Getting to kiss the Blarney Stone!.' }
   ];
 
   var NS = 'http://www.w3.org/2000/svg';
+  var stage = root.querySelector('.sc-stage');
   var pinsLayer = root.querySelector('.sc-pins');
   var hint = root.querySelector('.sc-hint');
-  var modal = root.querySelector('.sc-modal');
-  var card = root.querySelector('.sc-card');
-  var titleEl = root.querySelector('.sc-title');
-  var subEl = root.querySelector('.sc-sub');
-  var frame = root.querySelector('.sc-frame');
-  var photo = root.querySelector('.sc-photo');
-  var capEl = root.querySelector('.sc-cap');
-  var closeBtn = root.querySelector('.sc-close');
-  var prevBtn = root.querySelector('.sc-prev');
-  var nextBtn = root.querySelector('.sc-next');
-  var current = null, index = 0, activePin = null;
+  var spots = [];
+  var openSpot = null;
 
-  photo.addEventListener('load', function () { frame.classList.remove('is-error'); });
-  photo.addEventListener('error', function () { frame.classList.add('is-error'); frame.querySelector('.sc-fail').textContent = 'Could not load: ' + photo.src; });
-  function showPhoto(i) {
-    var list = current.photos;
-    index = (i + list.length) % list.length;
-    var p = list[index];
-    frame.classList.remove('is-error');
-    photo.alt = p.caption || current.name;
-    photo.src = IMG_PATH + p.file;
-    capEl.textContent = (p.caption || '') + (list.length > 1 ? '  (' + (index + 1) + ' of ' + list.length + ')' : '');
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
   }
 
-  function openPlace(place, pin) {
-    if (activePin) activePin.classList.remove('is-active');
-    activePin = pin;
-    pin.classList.add('is-active');
-    current = place;
-    titleEl.textContent = place.name;
-    subEl.textContent = place.sub;
-    card.classList.toggle('has-many', place.photos.length > 1);
-    showPhoto(0);
+  function closeAll(returnFocus) {
+    if (!openSpot) return;
+    var s = openSpot;
+    openSpot = null;
+    s.node.classList.remove('is-open');
+    s.pin.setAttribute('aria-expanded', 'false');
+    s.card.setAttribute('aria-hidden', 'true');
+    if (returnFocus) s.pin.focus();
+  }
+
+  function openPlace(s) {
+    if (openSpot === s) { closeAll(true); return; }
+    closeAll(false);
+    var W = stage.clientWidth, H = stage.clientHeight;
+    var px = s.place.x / 100 * W, py = s.place.y / 100 * H;
+    var w = Math.min(230, W - 16);
+    s.card.style.width = w + 'px';
+    s.card.style.maxHeight = (H - 16) + 'px';
+    var h = s.card.offsetHeight;
+    var left = Math.max(8, Math.min(px - w / 2, W - w - 8));
+    var top = Math.max(8, Math.min(py - h - 4, H - h - 8));
+    s.card.style.left = (left - px) + 'px';
+    s.card.style.top = (top - py) + 'px';
+    s.node.classList.add('is-open');
+    s.pin.setAttribute('aria-expanded', 'true');
+    s.card.setAttribute('aria-hidden', 'false');
     hint.classList.add('is-hidden');
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    closeBtn.focus();
-  }
-
-  function closeModal() {
-    if (!modal.classList.contains('is-open')) return;
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    if (activePin) { activePin.classList.remove('is-active'); activePin.focus(); }
-    activePin = null;
-    current = null;
+    openSpot = s;
+    setTimeout(function () { if (openSpot === s) s.card.focus(); }, 220);
   }
 
   places.forEach(function (place) {
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'sc-pin';
-    btn.style.left = place.x + '%';
-    btn.style.top = place.y + '%';
-    btn.setAttribute('aria-label', 'See photos from ' + place.name);
+    var node = el('div', 'sc-spot');
+    node.style.left = place.x + '%';
+    node.style.top = place.y + '%';
 
+    var pin = el('button', 'sc-pin');
+    pin.type = 'button';
+    pin.setAttribute('aria-expanded', 'false');
+    pin.setAttribute('aria-label', 'Flip the ' + place.name + ' pin to read my favorite memory');
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 28 38');
     svg.setAttribute('aria-hidden', 'true');
@@ -408,28 +347,39 @@
     eye.setAttribute('r', '4.5');
     svg.appendChild(body);
     svg.appendChild(eye);
-    btn.appendChild(svg);
+    pin.appendChild(svg);
+    pin.appendChild(el('span', 'sc-label', place.name));
 
-    var label = document.createElement('span');
-    label.className = 'sc-label';
-    label.textContent = place.name;
-    btn.appendChild(label);
+    var card = el('div', 'sc-card');
+    card.tabIndex = -1;
+    card.setAttribute('role', 'group');
+    card.setAttribute('aria-label', 'Favorite memory from ' + place.title);
+    card.setAttribute('aria-hidden', 'true');
+    var close = el('button', 'sc-close', '\u00D7');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Flip back');
+    card.appendChild(close);
+    card.appendChild(el('div', 'sc-kicker', 'Favorite memory'));
+    card.appendChild(el('div', 'sc-city', place.title));
+    card.appendChild(el('div', 'sc-memory', place.memory));
+    card.appendChild(el('div', 'sc-tip', 'Click to flip back'));
 
-    btn.addEventListener('click', function () { openPlace(place, btn); });
-    pinsLayer.appendChild(btn);
+    node.appendChild(pin);
+    node.appendChild(card);
+    pinsLayer.appendChild(node);
+
+    var s = { place: place, node: node, pin: pin, card: card };
+    spots.push(s);
+    pin.addEventListener('click', function (e) { e.stopPropagation(); openPlace(s); });
+    card.addEventListener('click', function (e) { e.stopPropagation(); closeAll(true); });
   });
 
-  closeBtn.addEventListener('click', closeModal);
-  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-  prevBtn.addEventListener('click', function () { showPhoto(index - 1); });
-  nextBtn.addEventListener('click', function () { showPhoto(index + 1); });
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeModal();
-    else if (current && current.photos.length > 1 && e.key === 'ArrowLeft') showPhoto(index - 1);
-    else if (current && current.photos.length > 1 && e.key === 'ArrowRight') showPhoto(index + 1);
-  });
+  stage.addEventListener('click', function () { closeAll(false); });
+  window.addEventListener('resize', function () { closeAll(false); });
+  root.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(true); });
 })();
-</script></script></div>
+</script>
+</div>
 
 <!-- Footer: fill in your name -->
 <footer>Built by Riley Burge &middot; BMIS 235</footer>
