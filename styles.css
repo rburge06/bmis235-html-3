@@ -57,3 +57,16 @@ footer {
     color: #777777;
     margin-top: 40px;
 }
+
+/* Responsive travel photos */
+img {
+    max-width: 100%;
+    max-height: 65vh;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin: 15px auto;
+}
+
+}
