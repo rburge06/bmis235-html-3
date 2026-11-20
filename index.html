@@ -38,7 +38,443 @@
      This box is empty on purpose. In Part 7 you paste an interactive
      graphic BETWEEN the opening <div> and the closing </div> below.
      ===================================================================== -->
-<div class="showcase"></div>
+<div class="showcase">
+<!-- HTML: Interactive European travel map and destination photo gallery -->
+<div class="showcase">
+  <div class="travel-heading">
+    <span class="travel-eyebrow">MY EUROPEAN ADVENTURE</span>
+    <h2>Places That Stole My Heart</h2>
+    <p>One semester abroad, three unforgettable trips. Explore my favorite places in Europe.</p>
+  </div>
+
+  <div class="travel-map">
+    <svg class="europe-map" viewBox="0 0 600 390" role="img" aria-label="Illustrated map of Europe showing four travel destinations">
+      <defs>
+        <pattern id="mapDots" width="12" height="12" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1" fill="#98daed" opacity=".65"/>
+        </pattern>
+      </defs>
+
+      <rect width="600" height="390" rx="18" fill="#f3faff"/>
+
+      <!-- Simplified European landmass -->
+      <path d="M130 75 L160 48 L195 57 L210 33 L242 44 L257 70 L290 64 L315 85 L348 70 L374 89 L400 73 L427 92 L454 86 L480 111 L464 137 L490 157 L474 182 L500 204 L479 228 L460 254 L441 271 L420 266 L410 292 L385 287 L367 306 L344 290 L325 307 L302 292 L281 308 L257 287 L240 301 L220 275 L194 280 L178 255 L155 250 L143 224 L120 205 L133 179 L110 158 L124 134 L105 112 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="2"/>
+
+      <!-- Northern and eastern regions -->
+      <path d="M275 20 L320 13 L351 29 L390 21 L427 38 L460 29 L490 53 L520 49 L541 77 L515 99 L486 90 L465 110 L435 92 L405 105 L375 83 L348 94 L324 68 L292 72 Z"
+        fill="#e6f3f5" stroke="#98cbd9" stroke-width="1.5"/>
+
+      <!-- Scandinavia -->
+      <path d="M310 12 L327 0 L350 9 L367 37 L359 72 L343 91 L324 75 L320 48 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+      <path d="M382 5 L405 12 L419 38 L411 68 L393 80 L376 57 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+
+      <!-- British Isles -->
+      <path d="M113 104 L128 88 L143 95 L146 119 L136 140 L119 135 L110 119 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+      <path d="M92 115 L102 108 L109 122 L104 139 L94 142 L87 128 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+
+      <!-- Iberian Peninsula -->
+      <path d="M127 235 L155 225 L185 233 L203 251 L195 282 L168 298 L140 281 L122 258 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+
+      <!-- Italy -->
+      <path d="M300 222 L318 239 L325 259 L340 279 L334 299 L323 281 L309 268 L299 245 L286 232 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+      <path d="M337 302 L353 308 L361 319 L347 316 Z"
+        fill="#dceff3" stroke="#98cbd9" stroke-width="1.5"/>
+
+      <!-- Decorative island -->
+      <path d="M248 280 L255 285 L252 297 L244 293 Z" fill="#dceff3" stroke="#98cbd9"/>
+
+      <text x="287" y="155" fill="#8bb5c2" font-size="13" font-style="italic" letter-spacing="4">EUROPE</text>
+      <text x="294" y="177" fill="#8bb5c2" font-size="8" letter-spacing="2">MY TRAVEL MAP</text>
+    </svg>
+
+    <!-- Interactive destination pins -->
+    <button class="map-pin pin-florence active" data-place="florence" aria-label="Explore Florence" aria-pressed="true">
+      <span class="pin-dot">✦</span>
+      <span class="pin-label">Florence</span>
+    </button>
+
+    <button class="map-pin pin-edinburgh" data-place="edinburgh" aria-label="Explore Edinburgh" aria-pressed="false">
+      <span class="pin-dot">✦</span>
+      <span class="pin-label">Edinburgh</span>
+    </button>
+
+    <button class="map-pin pin-barcelona" data-place="barcelona" aria-label="Explore Barcelona" aria-pressed="false">
+      <span class="pin-dot">✦</span>
+      <span class="pin-label">Barcelona</span>
+    </button>
+
+    <button class="map-pin pin-cork" data-place="cork" aria-label="Explore Cork" aria-pressed="false">
+      <span class="pin-dot">✦</span>
+      <span class="pin-label">Cork</span>
+    </button>
+  </div>
+
+  <div class="map-instruction">✦ &nbsp; CLICK A PIN TO EXPLORE MY TRAVELS</div>
+
+  <!-- Destination details and photo gallery -->
+  <div class="destination-panel" aria-live="polite">
+    <div class="destination-info">
+      <span class="destination-number" id="travel-number">01 / 04</span>
+      <h3 id="travel-title">Florence, Italy</h3>
+      <p id="travel-description">My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.</p>
+    </div>
+
+    <div class="photo-gallery" id="travel-photos">
+      <div class="travel-photo">
+        <img src="img/florence-1.jpg" alt="Florence travel memory one">
+        <span class="photo-fallback">Add florence-1.jpg</span>
+      </div>
+      <div class="travel-photo">
+        <img src="img/florence-2.jpg" alt="Florence travel memory two">
+        <span class="photo-fallback">Add florence-2.jpg</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="travel-footer">COLLECTING MOMENTS, NOT JUST MILESTONES ♡</div>
+</div>
+
+<style>
+/* CSS: Styles the interactive map, destination pins, and photo gallery */
+.showcase {
+  font-family: Georgia, "Aptos Serif", serif;
+  color: #2b5d8c;
+  background: #ffffff;
+  border: 1px solid #dceef4;
+  border-radius: 18px;
+  padding: 24px;
+  max-width: 850px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.showcase .travel-heading {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.showcase .travel-eyebrow {
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #5b9db7;
+}
+
+.showcase .travel-heading h2 {
+  font-size: clamp(23px, 4vw, 34px);
+  margin: 9px 0;
+  color: #2b5d8c;
+}
+
+.showcase .travel-heading p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #68879a;
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+.showcase .travel-map {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.showcase .europe-map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.showcase .map-pin {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+}
+
+.showcase .pin-dot {
+  width: 29px;
+  height: 29px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #2b5d8c;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  box-shadow: 0 2px 7px #2b5d8c55;
+  transition: transform .2s, background .2s;
+}
+
+.showcase .pin-label {
+  background: white;
+  color: #2b5d8c;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 2px 7px #2b5d8c22;
+  white-space: nowrap;
+}
+
+.showcase .map-pin:hover .pin-dot,
+.showcase .map-pin.active .pin-dot {
+  background: #65b8d3;
+  transform: rotate(-45deg) scale(1.2);
+}
+
+.showcase .map-pin.active .pin-label {
+  background: #2b5d8c;
+  color: white;
+}
+
+.showcase .pin-florence {
+  left: 56%;
+  top: 69%;
+}
+
+.showcase .pin-edinburgh {
+  left: 25%;
+  top: 31%;
+}
+
+.showcase .pin-barcelona {
+  left: 27%;
+  top: 76%;
+}
+
+.showcase .pin-cork {
+  left: 14%;
+  top: 47%;
+}
+
+.showcase .map-instruction {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #75a9bd;
+  margin: 4px 0 20px;
+}
+
+.showcase .destination-panel {
+  background: #f2f9fc;
+  border-radius: 13px;
+  padding: 20px;
+  border: 1px solid #d9edf4;
+}
+
+.showcase .destination-number {
+  font-family: Arial, sans-serif;
+  color: #65a9c2;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.showcase .destination-info h3 {
+  font-size: 25px;
+  margin: 7px 0;
+  color: #2b5d8c;
+}
+
+.showcase .destination-info p {
+  color: #607e91;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.showcase .photo-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.showcase .travel-photo {
+  height: 155px;
+  border-radius: 9px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #98daed, #dceff3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showcase .travel-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.showcase .photo-fallback {
+  color: #2b5d8c;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  padding: 10px;
+  text-align: center;
+}
+
+.showcase .travel-footer {
+  text-align: center;
+  color: #75a9bd;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin-top: 18px;
+}
+
+@media (max-width: 500px) {
+  .showcase {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .showcase .travel-heading h2 {
+    font-size: 23px;
+  }
+
+  .showcase .travel-heading p {
+    font-size: 12px;
+  }
+
+  .showcase .pin-dot {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .showcase .pin-label {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  .showcase .destination-panel {
+    padding: 14px;
+  }
+
+  .showcase .destination-info h3 {
+    font-size: 21px;
+  }
+
+  .showcase .travel-photo {
+    height: 115px;
+  }
+}
+</style>
+
+<script>
+/* JavaScript: Changes the selected destination and its travel photos when a map pin is clicked */
+(function () {
+  const showcase = document.currentScript.parentElement;
+  const destinations = {
+    florence: {
+      number: "01 / 04",
+      title: "Florence, Italy",
+      description: "My home away from home. The city where my study abroad adventure began and where I made some of my favorite memories.",
+      photos: ["img/florence-1.jpg", "img/florence-2.jpg"]
+    },
+    edinburgh: {
+      number: "02 / 04",
+      title: "Edinburgh, Scotland",
+      description: "A trip filled with beautiful architecture, charming streets, and unforgettable Scottish scenery.",
+      photos: ["img/edinburgh-1.jpg", "img/edinburgh-2.jpg"]
+    },
+    barcelona: {
+      number: "03 / 04",
+      title: "Barcelona, Spain",
+      description: "Colorful architecture, incredible views, and the energy of exploring a completely new city.",
+      photos: ["img/barcelona-1.jpg", "img/barcelona-2.jpg"]
+    },
+    cork: {
+      number: "04 / 04",
+      title: "Cork, Ireland",
+      description: "A memorable Irish adventure filled with new experiences, beautiful landscapes, and great memories.",
+      photos: ["img/cork-1.jpg", "img/cork-2.jpg"]
+    }
+  };
+
+  const pins = showcase.querySelectorAll(".map-pin");
+  const number = showcase.querySelector("#travel-number");
+  const title = showcase.querySelector("#travel-title");
+  const description = showcase.querySelector("#travel-description");
+  const gallery = showcase.querySelector("#travel-photos");
+
+  function selectDestination(place) {
+    const destination = destinations[place];
+    if (!destination) return;
+
+    number.textContent = destination.number;
+    title.textContent = destination.title;
+    description.textContent = destination.description;
+
+    pins.forEach(function (pin) {
+      const selected = pin.dataset.place === place;
+      pin.classList.toggle("active", selected);
+      pin.setAttribute("aria-pressed", selected ? "true" : "false");
+    });
+
+    gallery.innerHTML = "";
+
+    destination.photos.forEach(function (photo, index) {
+      const frame = document.createElement("div");
+      frame.className = "travel-photo";
+
+      const img = document.createElement("img");
+      img.src = photo;
+      img.alt = destination.title + " travel memory " + (index + 1);
+
+      const fallback = document.createElement("span");
+      fallback.className = "photo-fallback";
+      fallback.textContent = "Add " + photo;
+
+      img.addEventListener("load", function () {
+        fallback.hidden = true;
+      });
+
+      img.addEventListener("error", function () {
+        img.hidden = true;
+      });
+
+      frame.appendChild(img);
+      frame.appendChild(fallback);
+      gallery.appendChild(frame);
+    });
+  }
+
+  pins.forEach(function (pin) {
+    pin.addEventListener("click", function () {
+      selectDestination(pin.dataset.place);
+    });
+  });
+
+  selectDestination("florence");
+})();
+</script>
+</div>
 
 <!-- Footer: fill in your name -->
 <footer>Built by YOUR NAME &middot; BMIS 235</footer>
